@@ -5,6 +5,7 @@ import SignUp from "../components/SignUp"
 import UpcomingTasks from "../components/UpcomingTasks"
 import CompletedTasks from "../components/CompletedTasks"
 import Top from "../ReactTest/Top"
+import Home from "../Home/Home"
 
 const router = createBrowserRouter([
     {
@@ -30,7 +31,12 @@ const router = createBrowserRouter([
             
         ],
         
-    },{
+    },
+    {
+        path: "/home",
+        element:<Home/>
+    },
+    {
         path:"/login",
         element:<Login/>
     },{

@@ -9,7 +9,7 @@ function App() {
   const navigate = useNavigate();
   useEffect(() => {
     if(!localStorage.getItem("username")){
-      return navigate("/signup");
+      return navigate("/home");
     }
   },[localStorage.getItem("username")])
   return (

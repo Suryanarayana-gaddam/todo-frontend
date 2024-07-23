@@ -30,7 +30,7 @@ const Login = () => {
         alert(res.status+" : Password is Incorrect");
       }else{
         alert("Welcome Back User...")
-        navigate("/",{replace:true})
+        navigate("/",{replace:true});
       }
       //console.log("Res:",res)
       return res.json();
