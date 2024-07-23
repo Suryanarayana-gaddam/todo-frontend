@@ -9,7 +9,7 @@ const useFetch = (url) => {
                 try{
                     const response = await fetch(url);
                     if(!response.ok){
-                         return alert("Error fetching data")
+                         return alert("Error fetching data") 
                     }
                     const resData = await response.json();
                     console.log("Data:",resData)
@@ -23,5 +23,4 @@ const useFetch = (url) => {
     },[url])
   return {data}
 }
-
 export default useFetch;
