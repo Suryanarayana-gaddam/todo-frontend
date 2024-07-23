@@ -3,6 +3,9 @@ const app = express()
 const cors = require("cors")
 const MongoClient = require("mongodb").MongoClient;
 require("dotenv").config();
+
+const serverless = require('serverless-http');
+
 const bcrypt = require("bcryptjs")
 const port = process.env.PORT || 5990;
 
@@ -104,3 +107,4 @@ app.listen(port,() => {
 })
 
 module.exports = app;
+module.exports.handler = serverless(app);
