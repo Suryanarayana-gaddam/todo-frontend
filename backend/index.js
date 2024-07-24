@@ -134,7 +134,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 const uri = process.env.URI;
-const client = new MongoClient(uri, { useUnifiedTopology: true });
+const client = new MongoClient(uri);
 
 // MongoDB connection
 async function connectToDatabase() {
