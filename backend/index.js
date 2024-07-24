@@ -8,8 +8,11 @@ const serverless = require('serverless-http');
 
 const bcrypt = require("bcryptjs")
 const port = process.env.PORT || 5990;
+const corsOptions = {
+    origin: 'https://todo-backend-mu-two.vercel.app/', // Allow only this origin
 
-app.use(cors())
+}
+app.use(cors(corsOptions))
 app.use(express.json())
 
 const uri = process.env.URI;
