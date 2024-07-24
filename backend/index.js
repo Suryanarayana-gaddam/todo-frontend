@@ -134,7 +134,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 const uri = process.env.URI;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const client = new MongoClient(uri, { useUnifiedTopology: true });
 
 // MongoDB connection
 async function connectToDatabase() {
@@ -220,11 +220,6 @@ async function startServer() {
             }
         });
 
-        // Start the server
-        app.listen(port, () => {
-            console.log("App listening on port:", port);
-        });
-
         return app;
     } catch (error) {
         console.error("Error starting server:", error);
@@ -232,7 +227,12 @@ async function startServer() {
     }
 }
 
-// Handle serverless deployment
-module.exports.handler = serverless(async (req, res) => {
-    await startServer();
+// Start the server
+startServer().then(app => {
+    app.listen(port, () => {
+        console.log("App listening on port:", port);
+    });
 });
+
+// Handle serverless deployment
+module.exports.handler = serverless(app);
