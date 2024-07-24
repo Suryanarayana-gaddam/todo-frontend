@@ -125,10 +125,8 @@ const port = process.env.PORT || 5990;
 
 // Configure CORS
 const corsOptions = {
-    origin: ['https://todo-backend-mu-two.vercel.app', 'http://localhost:5990'],
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type'],
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+    origin: ['https://todo-backend-mu-two.vercel.app', 'http://localhost:5990','http://localhost:5173','https://todo-frontend-gamma-five.vercel.app'],
+   
 };
 app.use(cors(corsOptions));
 app.use(express.json());

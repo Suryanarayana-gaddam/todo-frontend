@@ -6,6 +6,7 @@ import UpcomingTasks from "../components/UpcomingTasks"
 import CompletedTasks from "../components/CompletedTasks"
 import Top from "../ReactTest/Top"
 import Home from "../Home/Home"
+import AllTasks from "../components/AllTasks"
 
 const router = createBrowserRouter([
     {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
             {
                 path: "/completed-tasks",
                 element:<CompletedTasks/>
+            },
+            {
+                path: "/all-tasks",
+                element:<AllTasks/>
             },
             {
                 path: "/top",
