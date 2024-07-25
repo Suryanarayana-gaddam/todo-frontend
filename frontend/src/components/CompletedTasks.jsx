@@ -15,7 +15,7 @@ const CompletedTasks = () => {
 
   return (
     <div className={`grid grid-cols-1 place-items-center h-screen md:block p-3 mt-24`}>
-      
+      {tasks.length == 0  ? <h1 className='text-center font-bold'>You don&apos;t have any tasks in this section currently!</h1> : 
       <div className={` gap-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center place-items-center`}>
         {tasks && tasks.map((task,index) =>(
           <div key={task._id} className='border-2 border-gray-500 w-full h-full p-2'>
@@ -26,7 +26,7 @@ const CompletedTasks = () => {
             <p className='w-auto'><b>Description :</b> {task.description}</p>
           </div>
         ))}
-      </div>
+      </div>}
     </div>
   );
 };

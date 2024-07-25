@@ -19,8 +19,9 @@ const DisplayTasks = ({tasks,setTasks,data,userName}) => {
     } 
 
   return (
-    <div className='relative bottom-0 mt-44 xl:bottom-44 gap-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center place-items-center w-full'>
-      {tasks && tasks.map((task,index) =>(
+    <div >
+        {tasks.length == 0 ? (<h4 className='text-center font-bold'>You don&apos;t have no tasks in this section currently! </h4>) : 
+        <div className='relative bottom-0 mt-44 xl:bottom-44 gap-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center place-items-center w-full'>{tasks && tasks.map((task,index) =>(
           <div key={task._id} className='border-2 border-gray-500 w-full relative p-2 h-full'>
             <div className={`absolute top-3 right-2 ${currentDateTime > task.dateScheduled ? "hidden" : "block"}`}>
               <button className='p-1 rounded  bg-blue-400 hover:bg-white font-bold hover:text-blue-500'><Link to={`/update/task/${task._id}`}>Update</Link></button>
@@ -33,6 +34,7 @@ const DisplayTasks = ({tasks,setTasks,data,userName}) => {
             <p className='w-auto'><b>Description :</b> {task.description}</p>
           </div>
         ))}
+        </div>}
     </div>
   )
 }
