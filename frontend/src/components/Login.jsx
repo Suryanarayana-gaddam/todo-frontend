@@ -16,7 +16,6 @@ const Login = () => {
       email,
       password
     }
-    //console.log("Login User Data :",userData);
     fetch(`http://localhost:5990/login`,{
       method:"POST",
       headers:{
@@ -32,10 +31,8 @@ const Login = () => {
         alert("Welcome Back User...")
         navigate("/",{replace:true});
       }
-      //console.log("Res:",res)
       return res.json();
     }).then(response => {
-      //console.log("Response:",response)
       localStorage.removeItem("username")
       localStorage.setItem("username",response.username)
     }).catch(error =>{

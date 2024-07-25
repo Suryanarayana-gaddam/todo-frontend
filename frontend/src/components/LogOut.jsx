@@ -8,7 +8,7 @@ const LogOut = () => {
     const isConfirmed = window.confirm("Do you want to Log Out ?");
     if(isConfirmed){
       localStorage.removeItem("username");
-      console.log("Logged out !")
+      alert("Logged out !")
       navigate("/")
     }
   }

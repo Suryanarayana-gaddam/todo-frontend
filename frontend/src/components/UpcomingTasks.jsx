@@ -25,8 +25,6 @@ const UpcomingTasks = () => {
   // Handle change in input value
   const handleDateTimeChange = (e) => {
     setDateTime(e.target.value);
-    //console.log('Selected Date and Time:', dateTime);
-
   };
 
   const handlePopup = () => {
@@ -36,7 +34,6 @@ const UpcomingTasks = () => {
   useEffect(() => {
     setUrl(`http://localhost:5990/get-tasks/${userName}`);
     const currentDateTime = new Date().toISOString().slice(0, 16);
-    console.log("currentDateTime:",currentDateTime)
     setTasks(data.filter(task => task.dateScheduled > currentDateTime))
   },[userName,data])
 
@@ -45,13 +42,11 @@ const UpcomingTasks = () => {
   }
   const formSubmit = (e) => {
     e.preventDefault();
-    console.log('Selected Date and Time:', dateTime);
     const form = e.target;
     const taskTitle = form.title.value;
     const dateScheduled = form.datetime.value;
     const description = form.description.value;
     const taskData = { taskTitle, dateScheduled, description };
-    console.log("taskData:",taskData)
     fetch(`http://localhost:5990/addtask/${userName}`, {
       method: "POST",
       headers: {
@@ -63,7 +58,6 @@ const UpcomingTasks = () => {
     .then(data => {
       form.reset();
       alert("Task added successfully:"+ data);
-      console.log("Task added successfully:", JSON.stringify(data));
       setVisible(false);
       setTasks(prevTasks => [...prevTasks,taskData]);
       // Optionally, you can add logic to update state or show a success message

@@ -10,7 +10,6 @@ const CompletedTasks = () => {
   useEffect(() => {
     setUrl(`http://localhost:5990/get-tasks/${userName}`);
     const currentDateTime = new Date().toISOString().slice(0, 16);
-    //console.log("currentDateTime:",currentDateTime)
     setTasks(data.filter(task => task.dateScheduled < currentDateTime))
   },[userName,data])
 

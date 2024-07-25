@@ -5,7 +5,6 @@ const DisplayTasks = ({tasks,setTasks,data,userName}) => {
     const currentDateTime = new Date().toISOString().slice(0, 16);
     const handleDeleteTask = (taskId) => {
         const id = taskId;
-        console.log("Task Id :",taskId)
         fetch(`http://localhost:5990/delete-task/${id}`,{
           method:"DELETE",
           headers:{
@@ -16,7 +15,6 @@ const DisplayTasks = ({tasks,setTasks,data,userName}) => {
         .then(dataGot => {
           setTasks(data.filter(tasks => tasks._id !== dataGot.deletedTask._id));
           alert(`${dataGot.message}`);
-          console.log("Deleted task: ",dataGot.deletedTask,":",dataGot.deletedTask._id);
         })
     } 
 

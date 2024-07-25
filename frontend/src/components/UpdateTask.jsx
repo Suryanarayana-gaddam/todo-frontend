@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 
 const UpdateTask = () => {
     const {_id,username,taskTitle,dateScheduled,description} = useLoaderData();
-    console.log("Loader Data :",_id,username,taskTitle,dateScheduled,description)
     const [dateTime, setDateTime] = useState(dateScheduled);
-
+    const navigate = useNavigate();
     function getCurrentDateTime() {
         const today = new Date();
         let year = today.getFullYear();
@@ -18,19 +17,15 @@ const UpdateTask = () => {
       }
 
       const handleDateTimeChange = (e) => {
-        setDateTime(e.target.value);
-        //console.log('Selected Date and Time:', dateTime);
-        
+        setDateTime(e.target.value);        
       };
       const formSubmit = (e) => {
         e.preventDefault();
-        console.log('Selected Date and Time:', dateTime);
         const form = e.target;
         const taskTitle = form.title.value;
         const dateScheduled = form.datetime.value;
         const description = form.description.value;
         const taskData = { taskTitle, dateScheduled, description };
-        console.log("taskData:",taskData)
         fetch(`http://localhost:5990/update/task/${_id}`, {
           method: "PATCH",
           headers: {
@@ -41,13 +36,11 @@ const UpdateTask = () => {
         .then(res => res.json())
         .then(data => {
           form.reset();
-          alert("Task added successfully:"+ data);
-          console.log("Task added successfully:", JSON.stringify(data));
-          // Optionally, you can add logic to update state or show a success message
+          navigate("/");
+          alert("Task updated successfully.");
         })
         .catch(error => {
-          console.error("Error adding task:", error);
-          // Handle error appropriately (e.g., show error message)
+          console.error("Error updating task:", error);
         });
       };
 
