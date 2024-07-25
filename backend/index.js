@@ -22,8 +22,7 @@ app.get("/", (req,res)=> {
     res.send("Hello World!")
 })
 
-async function run(){
-    try{
+
         const db = await client.connect();
         const users = client.db("TODO").collection("users");
         const tasks = client.db("TODO").collection("tasks");
@@ -158,12 +157,7 @@ async function run(){
                 res.status(500).json("Internal server error!")
             }
         })
-    }
-    catch(error){}
-}
-run().catch(error => {
-    console.log("Error :",error)
-})
+    
 app.listen(port,() => {
     console.log("App listening on the port : ",port)
 })
