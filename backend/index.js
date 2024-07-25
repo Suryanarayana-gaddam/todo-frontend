@@ -1,4 +1,3 @@
-const express = require("express")
 const app = express()
 const cors = require("cors")
 const MongoClient = require("mongodb").MongoClient;
@@ -10,7 +9,7 @@ const bcrypt = require("bcryptjs")
 const port = process.env.PORT || 5990;
 
 const corsOptions = {
-    origin: ['https://todo-backend-mu-two.vercel.app', 'http://localhost:5990','http://localhost:5173','https://todo-frontend-gamma-five.vercel.app'],
+    origin: ['https://todo-sigma-ten-66.vercel.app/', 'http://localhost:5990','http://localhost:5173','https://todo-frontend-gamma-five.vercel.app'],
 }
 app.use(cors(corsOptions))
 app.use(express.json())
@@ -158,22 +157,15 @@ async function run(){
                 res.status(500).json("Internal server error!")
             }
         })
-        return app;
-    } catch (error) {
-        console.error("Error starting server:", error);
-        throw error; // Rethrow the error to handle it elsewhere
     }
+    catch(error){}
 }
-run().then(app => {
-    app.listen(port, () => {
-        console.log("App listening on port:", port);
-    });
-}).catch(error => {
+run().catch(error => {
     console.log("Error :",error)
 })
+app.listen(port,() => {
+    console.log("App listening on the port : ",port)
+})
 
-// Handle serverless deployment
-module.exports = app
+module.exports = app;
 module.exports.handler = serverless(app);
-
-
