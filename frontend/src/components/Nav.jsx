@@ -8,11 +8,11 @@ const Nav = () => {
   const [underline2,setUnderline2] = useState(false);
   const [underline3,setUnderline3] = useState(false);
   useEffect(() => {
-    if(location.href == ("http://localhost:5173/upcoming-tasks" || "https://todo-frontend-gamma-five.vercel.app/upcoming-tasks")){
+    if(location.href == "https://todo-frontend-gamma-five.vercel.app/upcoming-tasks"){
       setUnderline2(false)
       setUnderline3(false)
       setUnderline1(true)
-    }else if(location.href == ("http://localhost:5173/completed-tasks" || "https://todo-frontend-gamma-five.vercel.app/completed-tasks")){
+    }else if(location.href == "https://todo-frontend-gamma-five.vercel.app/completed-tasks"){
       setUnderline1(false)
       setUnderline3(false)
       setUnderline2(true)
