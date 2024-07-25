@@ -3,7 +3,7 @@ const app = express()
 const cors = require("cors")
 const MongoClient = require("mongodb").MongoClient;
 require("dotenv").config();
-
+const { ObjectId } = require("mongodb");
 const serverless = require('serverless-http');
 
 const bcrypt = require("bcryptjs")
@@ -29,6 +29,7 @@ async function run(){
         console.log("Mongo DB connected successfully!");
 
         const users = client.db("TODO").collection("users");
+        const tasks = client.db("TODO").collection("tasks");
 
         app.post("/register-user",async (req,res) => {
             try{
@@ -67,18 +68,22 @@ async function run(){
             }
         })
 
-        app.post("/addtask", async (req,res) => {
+        app.post("/addtask/:username", async (req,res) => {
             try {
-                const {id,username,taskTitle,dateScheduled,description} = req.body;
-                const response = await users.updateOne(
+                const {id,taskTitle,dateScheduled,description} = req.body;
+                const username = req.params.username;
+                const result = await tasks.insertOne({id,username,taskTitle,dateScheduled,description})
+                const newTask = await tasks.findOne({id});
+                //console.log("Result :",newTask)
+                await users.updateOne(
                     {username},
-                    {$addToSet:{tasks:{id,taskTitle,dateScheduled,description}}},
+                    {$addToSet:{tasks:newTask}},
                     {new : true}
                 )
-                if(!response){
+                if(!result){
                     return res.status(501).json("Error in adding task");
                 }
-                res.status(200).json(response);
+                res.status(200).json(result);
             } catch (error) {
                 console.log("Error creating user :",error)
                 res.status(500).json("Internal server error!")
@@ -96,6 +101,30 @@ async function run(){
                 res.status(200).json(response.tasks);
             } catch (error) {
                 console.log("Error creating user :",error)
+                res.status(500).json("Internal server error!")
+            }
+        })
+
+        app.delete("/delete-task/:id", async (req,res) =>{
+            const id = req.params.id;
+            const {username} = req.body;
+            console.log("ID:",id)
+            console.log("User:",username);
+            try {
+                const deletedOne = await tasks.findOne({_id:new ObjectId(id)})
+                const response = await tasks.deleteOne({_id:new ObjectId(id)});
+                const responses = await users.findOneAndUpdate(
+                    {username : username},
+                    {$pull : {tasks : {_id :new ObjectId(id)}}},
+                    {new : true}
+                );
+                console.log("Response:",response,":",responses,":",response.tasks)
+                if(!response){
+                    return res.status(501).json("Error in adding task");
+                }
+                res.status(200).json({ message: "Task deleted successfully", deletedTask: deletedOne });
+            } catch (error) {
+                console.log("Error deleting task :",error)
                 res.status(500).json("Internal server error!")
             }
         })

@@ -15,7 +15,7 @@ const AllTasks = () => {
       <div className={` gap-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center h-fit place-items-center `}>
         {data && data.map((task,index) =>(
           <div key={task.id} className='border-2 border-gray-500 w-full h-full p-2'>
-            <p className='bg-amber-300 px-2 text-black'>{index}</p>
+            <p className='bg-amber-300 px-2 text-black'>{index+1}</p>
             <p><b>Id :</b>{task.id}</p>
             <p><b>Task :</b> {task.taskTitle}</p>
             <p><b>Date :</b> {task.dateScheduled}</p>

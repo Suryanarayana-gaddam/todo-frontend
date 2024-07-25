@@ -12,6 +12,7 @@ function App() {
       return navigate("/home");
     }
   },[localStorage.getItem("username")])
+  
   return (
     <>
       <Nav/>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useFetch from '../../Hooks/useFetch';
 import { FaCross, FaPlus, FaX } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
 
 const UpcomingTasks = () => {
   const [visible, setVisible] = useState(false);
@@ -30,7 +31,23 @@ const UpcomingTasks = () => {
   const handlePopup = () => {
     setVisible(true);
   };
-  
+
+  const handleDeleteTask = (taskId) => {
+    const id = taskId;
+    console.log("Task Id :",taskId)
+    fetch(`http://localhost:5990/delete-task/${id}`,{
+      method:"DELETE",
+      headers:{
+        "Content-type" : "application/json",
+      },
+      body:JSON.stringify({username:userName})
+    }).then(res => res.json())
+    .then(dataGot => {
+      setTasks(data.filter(tasks => tasks._id !== dataGot.deletedTask._id));
+      alert(`${dataGot.message}`);
+      console.log("Deleted task: ",dataGot.deletedTask,":",dataGot.deletedTask._id);
+    })
+} 
   
   const userName = localStorage.getItem("username");
   useEffect(() => {
@@ -47,14 +64,13 @@ const UpcomingTasks = () => {
     e.preventDefault();
     console.log('Selected Date and Time:', dateTime);
     const form = e.target;
-    const username = userName;
     const id = data.length+1;
     const taskTitle = form.title.value;
     const dateScheduled = form.datetime.value;
     const description = form.description.value;
-    const taskData = { username, id, taskTitle, dateScheduled, description };
+    const taskData = { id, taskTitle, dateScheduled, description };
     console.log("taskData:",taskData)
-    fetch("http://localhost:5990/addtask", {
+    fetch(`http://localhost:5990/addtask/${userName}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -64,9 +80,10 @@ const UpcomingTasks = () => {
     .then(res => res.json())
     .then(data => {
       form.reset();
-      alert("Task added successfully:", data);
-      console.log("Task added successfully:", data);
+      alert("Task added successfully:"+ data);
+      console.log("Task added successfully:", JSON.stringify(data));
       setVisible(false);
+      setTasks(prevTasks => [...prevTasks,taskData]);
       // Optionally, you can add logic to update state or show a success message
     })
     .catch(error => {
@@ -77,7 +94,7 @@ const UpcomingTasks = () => {
 
   return (
     <div className={`grid grid-cols-1 place-items-center h-screen md:p-2 ${visible ? "bg-opacity-20 bg-red-400" : " "}`}>
-      <button onClick={handlePopup} className={`${visible ? "hidden" : "inline-flex"} cursor-pointer bg-green-400 rounded p-2 hover:bg-green-200 font-bold xl:relative w-fit bottom-16`}><FaPlus/><span className='relative bottom-1'> Add Task</span></button>
+      <button onClick={handlePopup} className={`${visible ? "hidden" : "inline-flex"} cursor-pointer bg-green-400 rounded p-2 hover:bg-green-200 font-bold xl:relative w-fit bottom-10 m-3`}><FaPlus/><span className='relative bottom-1'> Add Task</span></button>
       <div className={`${visible ? "block" : "hidden"}  w-[400px] p-2`}>
         <div className='grid justify-center place-items-center p-2 h-[500px] w-full'>
           <form onSubmit={formSubmit} className={`${visible ? "bg-white" : ""} relative border-2 outline outline-black p-3 space-y-2`}>
@@ -102,10 +119,14 @@ const UpcomingTasks = () => {
           </form>
         </div>
       </div>
-      <div className={` ${visible ? "hidden" : "block"} xl:relative xl:bottom-44 gap-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center place-items-center w-fit`}>
+      <div className={` ${visible ? "hidden" : "block"} xl:relative xl:bottom-44 gap-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center place-items-center w-full`}>
         {tasks && tasks.map((task,index) =>(
-          <div key={task.id} className='border-2 border-gray-500 w-full p-2 h-full'>
-            <p className='bg-amber-300 px-2 text-black'>{index}</p>
+          <div key={task.id} className='border-2 border-gray-500 w-full relative p-2 h-full'>
+            <div className='absolute top-3 right-2'>
+              <button className='p-1 rounded  bg-blue-400 hover:bg-white font-bold hover:text-blue-500'><Link to={"/update/task"}>Update</Link></button>
+              <button onClick={() => handleDeleteTask(task._id)} className=' mx-2 p-1 rounded  bg-red-400 hover:bg-white font-bold hover:text-red-500'>Delete</button>
+            </div>
+            <p className='bg-amber-300 px-2 text-black h-10'>{index+1}</p>
             <p><b>Id :</b>{task.id}</p>
             <p><b>Task :</b> {task.taskTitle}</p>
             <p><b>Date :</b> {task.dateScheduled}</p>
