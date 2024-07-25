@@ -19,7 +19,7 @@ const DisplayTasks = ({tasks,setTasks,data,userName}) => {
     } 
 
   return (
-    <div className='relative bottom-0 xl:bottom-44 gap-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center place-items-center w-full'>
+    <div className='relative bottom-0 mt-44 xl:bottom-44 gap-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-center place-items-center w-full'>
       {tasks && tasks.map((task,index) =>(
           <div key={task._id} className='border-2 border-gray-500 w-full relative p-2 h-full'>
             <div className={`absolute top-3 right-2 ${currentDateTime > task.dateScheduled ? "hidden" : "block"}`}>

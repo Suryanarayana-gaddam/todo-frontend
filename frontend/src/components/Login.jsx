@@ -29,7 +29,7 @@ const Login = () => {
         alert(res.status+" : Password is Incorrect");
       }else{
         alert("Welcome Back User...")
-        navigate("/",{replace:true});
+        navigate("/upcoming-tasks",{replace:true});
       }
       return res.json();
     }).then(response => {
