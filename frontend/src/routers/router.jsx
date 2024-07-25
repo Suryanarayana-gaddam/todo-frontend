@@ -4,7 +4,6 @@ import Login from "../components/Login"
 import SignUp from "../components/SignUp"
 import UpcomingTasks from "../components/UpcomingTasks"
 import CompletedTasks from "../components/CompletedTasks"
-import Top from "../ReactTest/Top"
 import Home from "../Home/Home"
 import AllTasks from "../components/AllTasks"
 import UpdateTask from "../components/UpdateTask"
@@ -41,12 +40,7 @@ const router = createBrowserRouter([
                         }
                     })
                 }
-            },
-            {
-                path: "/top",
-                element:<Top/>
-            },
-            
+            }
         ],
         
     },
