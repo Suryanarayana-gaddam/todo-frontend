@@ -22,7 +22,8 @@ app.get("/", (req,res)=> {
     res.send("Hello World!")
 })
 
-
+async function run(){
+    try{
         const db = await client.connect();
         const users = client.db("TODO").collection("users");
         const tasks = client.db("TODO").collection("tasks");
@@ -157,12 +158,22 @@ app.get("/", (req,res)=> {
                 res.status(500).json("Internal server error!")
             }
         })
-    
-app.listen(port,() => {
-    console.log("App listening on the port : ",port)
+        return app;
+    } catch (error) {
+        console.error("Error starting server:", error);
+        throw error; // Rethrow the error to handle it elsewhere
+    }
+}
+run().then(app => {
+    app.listen(port, () => {
+        console.log("App listening on port:", port);
+    });
+}).catch(error => {
+    console.log("Error :",error)
 })
 
-module.exports = app;
+// Handle serverless deployment
+module.exports = app
 module.exports.handler = serverless(app);
 
 
