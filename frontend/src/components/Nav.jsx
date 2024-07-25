@@ -24,7 +24,7 @@ const Nav = () => {
   },[location.href,underline1,underline2,underline3])
   
   return (
-    <div className='flex justify-between pt-4 bg-green-300 font-bold text-white'>
+    <div style={{zIndex:1}} className='flex justify-between pt-4 bg-green-300 font-bold text-white fixed top-0 left-0 right-0'>
         <div className='relative bottom-2 left-5'>
             <img src={logo} alt=""  width={40} height={40}/>
         </div>

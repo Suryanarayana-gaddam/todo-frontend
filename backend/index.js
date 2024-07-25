@@ -34,7 +34,8 @@ async function run(){
         app.post("/register-user",async (req,res) => {
             try{
                 const {username,email,password} = req.body;
-                const existingUser = users.findOne({email});
+                const existingUser = await users.findOne({email});
+                console.log("existingUser:",existingUser)
                 if(existingUser){
                     return res.status(403).json("Existing user, Please login!")
                 }
@@ -69,11 +70,11 @@ async function run(){
         })
 
         app.post("/addtask/:username", async (req,res) => {
+            const {taskTitle,dateScheduled,description} = req.body;
+            const username = req.params.username;
             try {
-                const {id,taskTitle,dateScheduled,description} = req.body;
-                const username = req.params.username;
-                const result = await tasks.insertOne({id,username,taskTitle,dateScheduled,description})
-                const newTask = await tasks.findOne({id});
+                const result = await tasks.insertOne({username,taskTitle,dateScheduled,description})
+                const newTask = await tasks.findOne({username});
                 //console.log("Result :",newTask)
                 await users.updateOne(
                     {username},
@@ -90,17 +91,31 @@ async function run(){
             }
         })
 
-        app.get("/gettasks/:username", async (req,res) => {
+        app.get("/getuser/:username", async (req,res) => {
             try {
                 const username = req.params.username;
-                const user = {username:username};
-                const response = await users.findOne(user);
-                if(!response){
+                const user = await users.findOne({username});
+                if(!user){
                     return res.status(501).json("Error in adding task");
                 }
-                res.status(200).json(response.tasks);
+                res.status(200).json(user);
             } catch (error) {
-                console.log("Error creating user :",error)
+                console.log("Error getting the user :",error)
+                res.status(500).json("Internal server error!")
+            }
+        })
+
+        app.get("/get-tasks/:username", async (req,res) => {
+            try {
+                const username = req.params.username;
+                const tasksByUsername = await tasks.find({ username : username}).toArray();
+                if(!tasksByUsername){
+                    return res.status(501).json("Error in adding task");
+                }
+                console.log("Tasks by User name:",tasksByUsername)
+                res.status(200).json(tasksByUsername);
+            } catch (error) {
+                console.log("Error getting tasks from Tasks :",error)
                 res.status(500).json("Internal server error!")
             }
         })
@@ -112,19 +127,54 @@ async function run(){
             console.log("User:",username);
             try {
                 const deletedOne = await tasks.findOne({_id:new ObjectId(id)})
-                const response = await tasks.deleteOne({_id:new ObjectId(id)});
+                const deletedTask = await tasks.deleteOne({_id:new ObjectId(id)});
                 const responses = await users.findOneAndUpdate(
                     {username : username},
                     {$pull : {tasks : {_id :new ObjectId(id)}}},
                     {new : true}
                 );
-                console.log("Response:",response,":",responses,":",response.tasks)
-                if(!response){
+                console.log("Response:",deletedTask,":",responses,":",responses.tasks)
+                if(!deletedTask){
                     return res.status(501).json("Error in adding task");
                 }
                 res.status(200).json({ message: "Task deleted successfully", deletedTask: deletedOne });
             } catch (error) {
                 console.log("Error deleting task :",error)
+                res.status(500).json("Internal server error!")
+            }
+        })
+
+        app.get("/get/task/:id", async (req,res) =>{
+            const id = req.params.id;
+            try {
+                const reqTask = await tasks.findOne({_id:new ObjectId(id)})
+                
+                if(!reqTask){
+                    return res.status(501).json("Error in adding task");
+                }
+                res.send(reqTask);
+            } catch (error) {
+                console.log("Error getting task :",error)
+                res.status(500).json("Internal server error!")
+            }
+        })
+
+        app.patch("/update/task/:id", async (req,res) => {
+            const taskData = req.body;
+            const id = req.params.id;
+            try {
+                const updatedTask = await tasks.findOneAndUpdate(
+                    {_id : new ObjectId(id)},
+                    {$set : {...taskData}},
+                    {upsert : true}
+                )
+                //console.log("Result :",newTask)
+                if(!updatedTask){
+                    return res.status(501).json("Error in adding task");
+                }
+                res.status(200).json(updatedTask);
+            } catch (error) {
+                console.log("Error Updating user :",error)
                 res.status(500).json("Internal server error!")
             }
         })

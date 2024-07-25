@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       <Nav/>
-      <div className='min-h-screen'>
+      <div className='min-h-screen overflow-auto m-2'>
           <Outlet/>
       </div>
       <Footer/>

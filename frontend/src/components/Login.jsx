@@ -58,7 +58,7 @@ const Login = () => {
           <button type='button' onClick={() =>{if(isShowClicked){setIsShowClicked(false)}else{setIsShowClicked(true)}}} className='absolute right-3 top-11 text-black'>{ isShowClicked ? <FaEyeSlash/> : <FaEye/>}</button>
         </div>
         <p>Don&apos;t have an account, please <Link to="/signup" className='text-indigo-800 hover:underline'>SignUp</Link> here.</p><br />
-        <div><button className='bg-indigo-700 w-full text-center p-1 rounded font-semibold text-white hover:text-blue-500 hover:bg-white'>Login</button></div>
+        <div><button className='bg-indigo-700 w-full text-center p-1 rounded font-semibold text-white hover:text-green-500 hover:bg-white'>Login</button></div>
       </form>
     </div>
   )

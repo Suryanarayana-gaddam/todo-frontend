@@ -7,6 +7,7 @@ import CompletedTasks from "../components/CompletedTasks"
 import Top from "../ReactTest/Top"
 import Home from "../Home/Home"
 import AllTasks from "../components/AllTasks"
+import UpdateTask from "../components/UpdateTask"
 
 const router = createBrowserRouter([
     {
@@ -28,6 +29,18 @@ const router = createBrowserRouter([
             {
                 path: "/all-tasks",
                 element:<AllTasks/>
+            },
+            {
+                path: "/update/task/:taskId",
+                element:<UpdateTask/>,
+                loader: ({params}) => {
+                    return fetch(`http://localhost:5990/get/task/${params.taskId}`,{
+                        method:"GET",
+                        headers:{
+                            "Content-type" : "application/json"
+                        }
+                    })
+                }
             },
             {
                 path: "/top",
