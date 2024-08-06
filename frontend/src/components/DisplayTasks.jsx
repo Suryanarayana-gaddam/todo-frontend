@@ -5,7 +5,7 @@ const DisplayTasks = ({tasks,setTasks,data,userName}) => {
     const currentDateTime = new Date().toISOString().slice(0, 16);
     const handleDeleteTask = (taskId) => {
         const id = taskId;
-        fetch(`http://localhost:5990/delete-task/${id}`,{
+        fetch(`https://todo-backend-six-lac.vercel.app/delete-task/${id}`,{
           method:"DELETE",
           headers:{
             "Content-type" : "application/json",

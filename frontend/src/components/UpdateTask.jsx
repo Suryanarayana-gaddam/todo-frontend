@@ -26,7 +26,7 @@ const UpdateTask = () => {
         const dateScheduled = form.datetime.value;
         const description = form.description.value;
         const taskData = { taskTitle, dateScheduled, description };
-        fetch(`http://localhost:5990/update/task/${_id}`, {
+        fetch(`https://todo-backend-six-lac.vercel.app/update/task/${_id}`, {
           method: "PATCH",
           headers: {
             "Content-type": "application/json",

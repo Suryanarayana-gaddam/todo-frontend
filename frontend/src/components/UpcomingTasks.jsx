@@ -32,7 +32,7 @@ const UpcomingTasks = () => {
   };
   
   useEffect(() => {
-    setUrl(`http://localhost:5990/get-tasks/${userName}`);
+    setUrl(`https://todo-backend-six-lac.vercel.app/get-tasks/${userName}`);
     const currentDateTime = new Date().toISOString().slice(0, 16);
     setTasks(data.filter(task => task.dateScheduled > currentDateTime))
   },[userName,data])
@@ -47,7 +47,7 @@ const UpcomingTasks = () => {
     const dateScheduled = form.datetime.value;
     const description = form.description.value;
     const taskData = { taskTitle, dateScheduled, description };
-    fetch(`http://localhost:5990/addtask/${userName}`, {
+    fetch(`https://todo-backend-six-lac.vercel.app/addtask/${userName}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",

@@ -8,7 +8,7 @@ const AllTasks = () => {
   const [tasks,setTasks] = useState([]);
   const userName = localStorage.getItem("username");
   useEffect(() => {
-    setUrl(`http://localhost:5990/get-tasks/${userName}`);
+    setUrl(`https://todo-backend-six-lac.vercel.app/get-tasks/${userName}`);
     setTasks(data)
   },[userName,data])
 

@@ -16,7 +16,7 @@ const Login = () => {
       email,
       password
     }
-    fetch(`http://localhost:5990/login`,{
+    fetch(`https://todo-backend-six-lac.vercel.app/login`,{
       method:"POST",
       headers:{
         "Content-type" : "application/json",

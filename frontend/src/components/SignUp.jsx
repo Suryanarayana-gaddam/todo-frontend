@@ -17,7 +17,7 @@ const SignUp = () => {
     const user = {
       username,email,password
     }
-    fetch("http://localhost:5990/register-user",{
+    fetch("https://todo-backend-six-lac.vercel.app/register-user",{
       method:"POST",
       headers : {
         "content-type" : "application/json",

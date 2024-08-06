@@ -33,7 +33,7 @@ const router = createBrowserRouter([
                 path: "/update/task/:taskId",
                 element:<UpdateTask/>,
                 loader: ({params}) => {
-                    return fetch(`http://localhost:5990/get/task/${params.taskId}`,{
+                    return fetch(`https://todo-backend-six-lac.vercel.app/get/task/${params.taskId}`,{
                         method:"GET",
                         headers:{
                             "Content-type" : "application/json"
