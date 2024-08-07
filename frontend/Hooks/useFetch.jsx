@@ -9,7 +9,7 @@ const useFetch = (url) => {
                 try{
                     const response = await fetch(url);
                     if(!response.ok){
-                         return alert("Error fetching data") 
+                         return console.log(`Error fetching data from ${url}`) 
                     }
                     const resData = await response.json();
                     setData(resData);

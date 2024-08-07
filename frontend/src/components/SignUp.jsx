@@ -27,11 +27,12 @@ const SignUp = () => {
       if(res.status == 403){
         alert(res.status+" : Existing User, Please login!");
         navigate("/login");
+      }else{
+        alert("Signed Up Successfully!")
+        navigate(from,{replace:true})
+        localStorage.removeItem("username")
+        localStorage.setItem("username",username)
       }
-      localStorage.removeItem("username")
-      localStorage.setItem("username",username)
-      alert("Signed Up Successfully!")
-      navigate(from,{replace:true})
     }).catch(error =>{
       alert("Error:",error)
     })
