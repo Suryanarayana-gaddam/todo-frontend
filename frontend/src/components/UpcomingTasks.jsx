@@ -23,7 +23,6 @@ const UpcomingTasks = () => {
   useEffect(() => {
     setUrl(`https://todo-backend-six-lac.vercel.app/get-tasks/${userName}`);
     const currentDateTime = getCurrentDateTime()
-    console.log(currentDateTime)
     setTasks(data.filter(task => task.dateScheduled > currentDateTime))
   },[userName,data])
 
