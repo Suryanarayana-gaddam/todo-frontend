@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useFetch from '../../Hooks/useFetch';
-
+import getCurrentDateTime from './CurrentTime'; "./CurrentTime"
 const CompletedTasks = () => {
   const [tasks, setTasks] = useState([]);
   const [url,setUrl] = useState(null)
@@ -9,7 +9,7 @@ const CompletedTasks = () => {
   const userName = localStorage.getItem("username");
   useEffect(() => {
     setUrl(`https://todo-backend-six-lac.vercel.app/get-tasks/${userName}`);
-    const currentDateTime = new Date().toISOString().slice(0, 16);
+    const currentDateTime = getCurrentDateTime();
     setTasks(data.filter(task => task.dateScheduled < currentDateTime))
   },[userName,data])
 

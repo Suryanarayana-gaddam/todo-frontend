@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useFetch from '../../Hooks/useFetch';
 import { FaPlus, FaX } from 'react-icons/fa6';
 import DisplayTasks from './DisplayTasks';
-
+import getCurrentDateTime from './CurrentTime';
 const UpcomingTasks = () => {
   const [visible, setVisible] = useState(false);
   const [tasks, setTasks] = useState([]);
@@ -10,17 +10,6 @@ const UpcomingTasks = () => {
   const { data }  = useFetch(url);
   const [dateTime, setDateTime] = useState(getCurrentDateTime());
   const userName = localStorage.getItem("username");
-
-  function getCurrentDateTime() {
-    const today = new Date();
-    let year = today.getFullYear();
-    let month = (today.getMonth() + 1).toString().padStart(2, '0');
-    let day = today.getDate().toString().padStart(2, '0');
-    let hours = today.getHours().toString().padStart(2, '0');
-    let minutes = today.getMinutes().toString().padStart(2, '0');
-
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-  }
 
   // Handle change in input value
   const handleDateTimeChange = (e) => {
@@ -33,7 +22,8 @@ const UpcomingTasks = () => {
   
   useEffect(() => {
     setUrl(`https://todo-backend-six-lac.vercel.app/get-tasks/${userName}`);
-    const currentDateTime = new Date().toISOString().slice(0, 16);
+    const currentDateTime = getCurrentDateTime()
+    console.log(currentDateTime)
     setTasks(data.filter(task => task.dateScheduled > currentDateTime))
   },[userName,data])
 

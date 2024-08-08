@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import getCurrentDateTime from './CurrentTime';
 
 const DisplayTasks = ({tasks,setTasks,data,userName}) => {
-    const currentDateTime = new Date().toISOString().slice(0, 16);
+    const currentDateTime = getCurrentDateTime();
     const handleDeleteTask = (taskId) => {
         const id = taskId;
         fetch(`https://todo-backend-six-lac.vercel.app/delete-task/${id}`,{
