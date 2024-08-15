@@ -4,7 +4,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [isShowClicked,setIsShowClicked] = useState(false);
-
+  const [isLoading,setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = (event) => {
@@ -29,7 +29,11 @@ const Login = () => {
         alert(res.status+" : Password is Incorrect");
       }else{
         alert("Welcome Back User...")
-        navigate("/upcoming-tasks",{replace:true});
+        setIsLoading(true);
+        setTimeout(() =>{
+          navigate("/upcoming-tasks",{replace:true});
+          setIsLoading(false);
+        },3000);
       }
       return res.json();
     }).then(response => {
@@ -38,6 +42,16 @@ const Login = () => {
     }).catch(error =>{
       console.error("Error in Login:",error)
     })
+  }
+
+  if(isLoading){
+    return <div className='grid place-items-center justify-center h-screen'>
+          <div>
+            <div className={`border-t-8 border-b-8 h-28 w-28 rounded-full border-rose-300 animate-spin`}></div>
+            <div className={`text-4xl text-red-400 animate-bounce relative bottom-[80px] left-[43px]`}>...</div>
+            <div className='relative bottom-8 right-2'>Loading please wait...</div>
+          </div>
+    </div>
   }
 
   return (
