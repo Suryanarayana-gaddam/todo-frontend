@@ -34,6 +34,7 @@ const SignUp = () => {
         setTimeout(() => {
           navigate("/login");
           setIsLoading(false);
+          alert("Please Login here...")
         },3000)
       }
     }).catch(error =>{
