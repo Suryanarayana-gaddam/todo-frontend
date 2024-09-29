@@ -58,7 +58,7 @@ const UpcomingTasks = () => {
   };
 
   return (
-    <div className={`grid grid-cols-1 place-items-center mt-24 px-3 h-screen ${visible ? "bg-opacity-30 bg-amber-400" : " "}`}>
+    <div className={`grid grid-cols-1 place-items-center px-3 h-screen ${visible ? "bg-opacity-30 bg-amber-400" : " "}`}>
       <div className={`${visible ? "hidden" : "flex"} relative w-full bottom-10 mt-3 `}>
         <div className='absolute left-10 top-0'><h1 className='text-[20px]'>Welcome <b>{userName}</b>, here&apos;s your upcoming tasks... </h1></div>
         <div className='absolute right-10 top-0'>
